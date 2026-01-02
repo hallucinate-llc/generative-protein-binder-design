@@ -3,19 +3,25 @@ FROM node:18-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
-COPY package.json ./
-RUN npm install
+# The build context is the repo root so bring the local SDK and dashboard manifests into the image
+COPY mcp-js-sdk /mcp-js-sdk
+WORKDIR /app
+COPY mcp-dashboard/package*.json ./
+RUN npm install \
+	&& rm -rf node_modules/@generative-protein/mcp-js-sdk \
+	&& cp -r /mcp-js-sdk node_modules/@generative-protein/mcp-js-sdk
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY --from=deps /mcp-js-sdk /mcp-js-sdk
+COPY mcp-dashboard .
+RUN mkdir -p public
 
 # Disable telemetry during build
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 

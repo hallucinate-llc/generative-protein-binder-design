@@ -1279,7 +1279,7 @@ class NativeBackend(ModelBackend):
         """Check if AlphaFold2 is available"""
         try:
             # Check for AlphaFold runner script and conda environment
-            runner_path = "/home/barberb/generative-protein-binder-design/tools/alphafold2_arm64/alphafold_runner.py"
+            runner_path = "/opt/generative-protein-binder-design/tools/alphafold2_arm64/alphafold_runner.py"
             if os.path.exists(runner_path):
                 # Check if conda environment exists
                 import subprocess
@@ -1295,7 +1295,7 @@ class NativeBackend(ModelBackend):
         """Check if RFDiffusion is available"""
         try:
             # Check for RFDiffusion runner script and conda environment
-            runner_path = "/home/barberb/generative-protein-binder-design/tools/rfdiffusion_arm64/rfdiffusion_runner.py"
+            runner_path = "/opt/generative-protein-binder-design/tools/rfdiffusion_arm64/rfdiffusion_runner.py"
             if os.path.exists(runner_path):
                 # Check if conda environment exists
                 import subprocess
@@ -1311,7 +1311,7 @@ class NativeBackend(ModelBackend):
         """Check if ProteinMPNN is available"""
         try:
             # Check for ProteinMPNN runner script and conda environment
-            runner_path = "/home/barberb/generative-protein-binder-design/tools/proteinmpnn_arm64/proteinmpnn_runner.py"
+            runner_path = "/opt/generative-protein-binder-design/tools/proteinmpnn_arm64/proteinmpnn_runner.py"
             if os.path.exists(runner_path):
                 # Check if conda environment exists
                 import subprocess
@@ -1419,25 +1419,25 @@ class NativeBackend(ModelBackend):
                 "status": "ready" if self.available_models.get("alphafold") else "not_available",
                 "backend": "Native ARM64",
                 "conda_env": "alphafold2_arm64",
-                "path": "/home/barberb/generative-protein-binder-design/tools/alphafold2_arm64/"
+                "path": "/opt/generative-protein-binder-design/tools/alphafold2_arm64/"
             },
             "rfdiffusion": {
                 "status": "ready" if self.available_models.get("rfdiffusion") else "not_available", 
                 "backend": "Native ARM64",
                 "conda_env": "rfdiffusion_arm64",
-                "path": "/home/barberb/generative-protein-binder-design/tools/rfdiffusion_arm64/"
+                "path": "/opt/generative-protein-binder-design/tools/rfdiffusion_arm64/"
             },
             "proteinmpnn": {
                 "status": "ready" if self.available_models.get("proteinmpnn") else "not_available",
                 "backend": "Native ARM64", 
                 "conda_env": "proteinmpnn_arm64",
-                "path": "/home/barberb/generative-protein-binder-design/tools/proteinmpnn_arm64/"
+                "path": "/opt/generative-protein-binder-design/tools/proteinmpnn_arm64/"
             },
             "alphafold_multimer": {
                 "status": "ready" if self.available_models.get("alphafold") else "not_available",
                 "backend": "Native ARM64",
                 "conda_env": "alphafold2_arm64",
-                "path": "/home/barberb/generative-protein-binder-design/tools/alphafold2_arm64/"
+                "path": "/opt/generative-protein-binder-design/tools/alphafold2_arm64/"
             }
         }
     
@@ -1460,7 +1460,7 @@ class NativeBackend(ModelBackend):
             # Run AlphaFold2 using the runner script
             cmd = [
                 "conda", "run", "-n", "alphafold2_arm64",
-                "python", "/home/barberb/generative-protein-binder-design/tools/alphafold2_arm64/alphafold_runner.py",
+                "python", "/opt/generative-protein-binder-design/tools/alphafold2_arm64/alphafold_runner.py",
                 fasta_file, output_dir
             ]
             
@@ -1509,7 +1509,7 @@ class NativeBackend(ModelBackend):
             # Run RFDiffusion using the runner script
             cmd = [
                 "conda", "run", "-n", "rfdiffusion_arm64",
-                "python", "/home/barberb/generative-protein-binder-design/tools/rfdiffusion_arm64/rfdiffusion_runner.py",
+                "python", "/opt/generative-protein-binder-design/tools/rfdiffusion_arm64/rfdiffusion_runner.py",
                 pdb_file, output_dir, str(design_id)
             ]
             
@@ -1555,7 +1555,7 @@ class NativeBackend(ModelBackend):
             # Run ProteinMPNN using the runner script
             cmd = [
                 "conda", "run", "-n", "proteinmpnn_arm64",
-                "python", "/home/barberb/generative-protein-binder-design/tools/proteinmpnn_arm64/proteinmpnn_runner.py",
+                "python", "/opt/generative-protein-binder-design/tools/proteinmpnn_arm64/proteinmpnn_runner.py",
                 pdb_file
             ]
             

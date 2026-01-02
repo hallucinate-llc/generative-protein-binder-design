@@ -109,8 +109,8 @@ services:
   mcp-dashboard:
     image: ${MCP_DASHBOARD_IMAGE:-mcp-dashboard:local}
     build:
-      context: ../mcp-dashboard
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: mcp-dashboard/Dockerfile
     ports:
       - "${MCP_DASHBOARD_HOST_PORT:-3000}:3000"
     environment:

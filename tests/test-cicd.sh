@@ -9,7 +9,7 @@ echo "=== Docker CI/CD Pipeline Test ==="
 echo "Testing the CI/CD pipeline components locally"
 echo
 
-PROJECT_ROOT="/home/barberb/generative-protein-binder-design"
+PROJECT_ROOT="/opt/generative-protein-binder-design"
 cd "$PROJECT_ROOT"
 
 # Function to test component build

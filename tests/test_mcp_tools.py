@@ -52,27 +52,42 @@ class MCP_ToolTester:
                 if response.status_code == 200:
                     data = response.json()
                     tools = data.get("tools", [])
-                    
-                    if len(tools) == 3:
-                        tool_names = [t["name"] for t in tools]
-                        expected = {"design_protein_binder", "get_job_status", "list_jobs"}
-                        
-                        if expected == set(tool_names):
-                            self._log_result(
-                                test_name, 
-                                "PASS", 
-                                f"Found {len(tools)} tools: {tool_names}"
-                            )
-                            return True
-                        else:
-                            self._log_result(
-                                test_name, 
-                                "FAIL", 
-                                f"Tool names mismatch. Expected {expected}, got {set(tool_names)}"
-                            )
-                            return False
+                    expected = {
+                        "get_runtime_config",
+                        "update_runtime_config",
+                        "reset_runtime_config",
+                        "embedded_bootstrap",
+                        "design_protein_binder",
+                        "get_job_status",
+                        "list_jobs",
+                        "delete_job",
+                        "check_services",
+                        "predict_structure",
+                        "design_binder_backbone",
+                        "generate_sequence",
+                        "predict_complex",
+                        "get_alphafold_settings",
+                        "update_alphafold_settings",
+                        "reset_alphafold_settings",
+                    }
+
+                    tool_names = {t["name"] for t in tools}
+
+                    if tool_names == expected:
+                        self._log_result(
+                            test_name,
+                            "PASS",
+                            f"Found {len(tools)} tools: {sorted(tool_names)}"
+                        )
+                        return True
                     else:
-                        self._log_result(test_name, "FAIL", f"Expected 3 tools, got {len(tools)}")
+                        missing = expected - tool_names
+                        extra = tool_names - expected
+                        self._log_result(
+                            test_name,
+                            "FAIL",
+                            f"Tool names mismatch. Missing: {sorted(missing)} Extra: {sorted(extra)}"
+                        )
                         return False
                 else:
                     self._log_result(test_name, "FAIL", f"Status {response.status_code}")
